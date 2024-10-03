@@ -29,7 +29,7 @@ class Driver:
         # return WebDriverWait(self.driver, IMPLICIT_WAIT).until(
         #     EC.visibility_of_all_elements_located((By.CSS_SELECTOR, CELL_SELECTOR))
         # )
-        return self.driver.find_all_elements(By.CSS_SELECTOR, CELL_SELECTOR)
+        return self.driver.find_elements(By.CSS_SELECTOR, CELL_SELECTOR)
 
     def fetch_length(self) -> int:
         return len(self.fetch_cells()) // NUM_ROWS
