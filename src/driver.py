@@ -1,17 +1,15 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-URL = 'https://www.tusmo.xyz'
-BUTTON_SELECTOR = '.menu-button'
-GRID_SELECTOR = '.motus-grid'
-CELL_SELECTOR = '.cell-content'
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-LOADING_WAIT = 10
+from settings import *
 
 class Driver:
     def __init__(self) -> None:
         self.driver = webdriver.Chrome()
-        self.driver.implicitly_wait(LOADING_WAIT)
+        self.driver.implicitly_wait(IMPLICIT_WAIT)
     
     def launch(self) -> None:
         self.driver.get(URL)
@@ -20,13 +18,21 @@ class Driver:
         buttons = self.driver.find_elements(By.CSS_SELECTOR, BUTTON_SELECTOR)
         buttons[mode].click()
 
-    def fetch_length(self) -> None:
-        grid = self.driver.find_element(By.CSS_SELECTOR, GRID_SELECTOR)
-        length = len(grid.value_of_css_property('grid-template-columns').split())
-        return length
+    def refresh(self) -> None:
+        self.driver.refresh()
+
+    def check_lost(self) -> bool:
+        middle_elements = self.driver.find_elements(By.CSS_SELECTOR, LOST_SELECTOR)
+        return len(middle_elements) == 1
 
     def fetch_cells(self):
-        return self.driver.find_element(By.CSS_SELECTOR, CELL_SELECTOR)
+        # return WebDriverWait(self.driver, IMPLICIT_WAIT).until(
+        #     EC.visibility_of_all_elements_located((By.CSS_SELECTOR, CELL_SELECTOR))
+        # )
+        return self.driver.find_all_elements(By.CSS_SELECTOR, CELL_SELECTOR)
+
+    def fetch_length(self) -> int:
+        return len(self.fetch_cells()) // NUM_ROWS
 
     def press_key(self, key: str) -> None:
         self.driver.execute_script("""

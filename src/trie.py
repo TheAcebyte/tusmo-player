@@ -1,5 +1,4 @@
-CHILDREN_COUNT = 26
-ENCODING = 'UTF8'
+from settings import *
 
 class Trie:
     def __init__(self) -> None:
@@ -18,13 +17,13 @@ class Trie:
         node.is_word = True
     
     def add_words(self, file: str) -> None:
-        with open(file, encoding=ENCODING) as f:
+        with open(file, 'r') as f:
             for word in f:
                 self.add_word(word.rstrip())
 
 class TrieNode:
     def __init__(self, is_word: bool=False) -> None:
-        self.children = [None] * CHILDREN_COUNT
+        self.children = [None] * TRIE_CHILDREN_COUNT
         self.is_word = is_word
     
     def get_child(self, key: str) -> None:
