@@ -26,13 +26,10 @@ class Driver:
         return len(middle_elements) == 1
 
     def fetch_cells(self):
-        # return WebDriverWait(self.driver, IMPLICIT_WAIT).until(
-        #     EC.visibility_of_all_elements_located((By.CSS_SELECTOR, CELL_SELECTOR))
-        # )
         return self.driver.find_elements(By.CSS_SELECTOR, CELL_SELECTOR)
 
-    def fetch_length(self) -> int:
-        return len(self.fetch_cells()) // NUM_ROWS
+    def fetch_length(self, cells) -> int:
+        return len(cells) // NUM_ROWS
 
     def press_key(self, key: str) -> None:
         self.driver.execute_script("""

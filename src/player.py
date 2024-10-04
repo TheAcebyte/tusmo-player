@@ -1,5 +1,4 @@
 from trie import Trie, TrieNode
-import time
 from settings import *
 
 def key_to_char(key: int) -> str:
@@ -9,15 +8,16 @@ class Player:
     def __init__(self, trie: Trie) -> None:
         self.trie = trie
 
-    def reset(self, target_length: int) -> list[str]:
+    def reset(self, cells: list, target_length: int) -> list[str]:
         self.word = [''] * target_length
         self.data = [[0, set(), i] for i in range(26)]
+        
+        first_letter = cells[0].get_attribute('textContent').lower()
+        self.word[0] = first_letter
 
-    def play(self) -> list[str]:
-        self.output = []
+    def play(self) -> None:
         data = sorted(self.data, reverse=True)
         self.helper(self.trie.root, data, 0)
-        return self.output
 
     def helper(self, node: TrieNode, data: list[int, set], index: int) -> bool:
         if node is None:
@@ -48,22 +48,19 @@ class Player:
                 return True
             
         return False
-
-    def update_response(self, cells: list, target_length: int, index: int) -> bool:
+    
+    def update_response(self, cells: list, index: int) -> None:
         try:
-            filled = 0
-
-            for i in range(index * target_length, index * target_length + target_length):
+            n = len(self.word)
+            for i in range(index * n, (index + 1) * n):
                 classes = cells[i].get_attribute('class').split()
-                letter = cells[i].text.lower()
-
+                j = i - index * n
+                letter = self.output[j]
                 key = ord(letter) - ord('a')
-                j = i - target_length * index
 
                 match(classes[-1]):
-                    case 'bg-blue-primary' | 'r':
+                    case 'r':
                         self.word[j] = letter
-                        filled += 1
 
                     case 'y':
                         self.data[key][0] = 1
@@ -74,9 +71,13 @@ class Player:
                             self.data[key][0] = -1
                         else:
                             self.data[key][1].add(j)
-            
-            return filled == target_length
-
-        except TypeError:
-            print(f"[ERROR] Failed to retrieve letter from cell element")
+        except Exception:
+            print("[ERROR] Internal error occured.")
             exit(1)
+
+    def is_filled(self) -> bool:
+        for letter in self.word:
+            if letter == '':
+                return False
+            
+        return True

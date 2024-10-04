@@ -13,30 +13,30 @@ def main() -> None:
 
     start(driver, player)
     while input("Continue? [Y/N]: ") == 'Y':
-        start(driver, player) 
+        start(driver, player)
 
 def start(driver: Driver, player: Player) -> None:
     driver.launch()
     driver.start(SOLO_MODE)
     lost = False
-    count = 0
+    count = -1
 
     while not lost:
-        length = driver.fetch_length()
-        player.reset(length)
+        cells = driver.fetch_cells()
+        length = driver.fetch_length(cells)
+        player.reset(cells, length)
 
-        for i in range(6):
-            cells = driver.fetch_cells()
-            valid = player.update_response(cells, length, max(0, i - 1))
-            
-            if valid:
-                break
-
-            output = player.play()
-            for char in output:
-                driver.press_key(char)
-
+        for i in range(NUM_ROWS):
+            player.play()
+            for letter in player.output:
+                driver.press_key(letter)
             driver.press_enter()
+            time.sleep(PLAY_DELAY)
+
+            cells = driver.fetch_cells()
+            player.update_response(cells, i)
+            if player.is_filled():
+                break
             time.sleep(ITERATION_DELAY)
         
         driver.refresh()
@@ -44,7 +44,7 @@ def start(driver: Driver, player: Player) -> None:
         lost = driver.check_lost()
         count += 1
     
-    print(f"\nFound words: {count}")
+    print(f"\nWords Found: {count}")
 
 if __name__ == '__main__':
     main()

@@ -6,7 +6,8 @@ LOST_SELECTOR = '.game-column > div > *'
 CELL_SELECTOR = '.cell-content'
 
 IMPLICIT_WAIT = 5
-ITERATION_DELAY = 0.5
+PLAY_DELAY = 0.4
+ITERATION_DELAY = 0.1
 ROUND_DELAY = 1
 
 NUM_ROWS = 6
