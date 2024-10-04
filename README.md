@@ -6,7 +6,7 @@
 **Note:** The bot may occasionally stop working, which can cause the whole instance to crash. I'm still trying to fix this issue, *trying*.
 
 ## Demo
-
+![Tusmo Solver Demonstration](demo.gif)
 
 ## Installation
 To install the project, run the following commands:
