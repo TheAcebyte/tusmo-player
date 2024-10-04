@@ -1,12 +1,9 @@
 # Tusmo Player
 
 ## About
-**Tusmo** is a webgame inspired by the French gameshow **Motus**, which is similar to **Wordle**.
+**Tusmo** is a webgame inspired by the French gameshow **Motus**, which is similar to **Wordle**. This project implements a player bot which runs on **Selenium**.
 
-This project implements a player bot which runs on **Selenium**.
-
-**WARNING:** the bot sometimes stops working, which causes the whole instance to crash out. I'm still working on fixing this bug, it's driving me crazy.
-
+**WARNING:** the bot stops working sometimes, which causes the whole instance to crash out.
 ## Demo
 
 ## Installation
