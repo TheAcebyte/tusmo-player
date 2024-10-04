@@ -1,7 +1,7 @@
-# Tusmo Player
+# Tusmo Solver
 
 ## About
-**Tusmo** is a web game inspired by the French game show **Motus**, which is similar to **Wordle**. This project features a player bot that operates using **Selenium**.
+**Tusmo** is a web game inspired by the French game show **Motus**, which is similar to **Wordle**. This project features a solver bot that operates using **Selenium**.
 
 **Note:** The bot may occasionally stop working, which can cause the whole instance to crash. I'm still trying to fix this issue.
 
@@ -11,12 +11,12 @@
 ## Installation
 To install the project, run the following commands:
 ```
-git clone https://github.com/TheAcebyte/tusmo-player.git
-cd tusmo-player
+git clone https://github.com/TheAcebyte/tusmo-solver.git
+cd tusmo-solver
 pip install -r requirements.txt
 ```
 
-To run the player:
+To run the bot:
 ```
 python src/main.py
 ```
